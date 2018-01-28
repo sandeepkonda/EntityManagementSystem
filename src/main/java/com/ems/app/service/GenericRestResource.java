@@ -1,6 +1,7 @@
 package com.ems.app.service;
 
 import static com.ems.app.util.Constants.ENDPOINT;
+import static com.ems.app.util.Constants.ID;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.util.List;
@@ -22,7 +23,6 @@ import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import com.ems.app.dao.ResourceDAO;
 import com.ems.app.manager.api.ResourceManager;
 import com.ems.app.object.BaseResource;
-import com.ems.app.object.User;
 
 @Path("/{endpoint}")
 public class GenericRestResource {
@@ -41,6 +41,24 @@ public class GenericRestResource {
 		List<Object> response = (List<Object>) resourceManager.search(resourceDAO);
 		GenericEntity<List<Object>> entity = 
 				 new GenericEntity<List<Object>>(response) {};
+		return Response.ok(entity).build();
+
+	}
+	
+	@Path("/{id}")
+	@GET
+	@Produces({APPLICATION_JSON})
+	@SuppressWarnings("unchecked")
+	public Response findResourceById(
+			@PathParam(ENDPOINT) String endpoint,
+			@PathParam(ID) String id
+			) throws Exception {
+
+		ResourceManager<?> resourceManager = provide(endpoint, ResourceManager.class);
+		
+		Object response = (Object) resourceManager.get(resourceDAO, id);
+		GenericEntity<Object> entity = 
+				 new GenericEntity<Object>(response) {};
 		return Response.ok(entity).build();
 
 	}

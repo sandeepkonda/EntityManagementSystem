@@ -10,4 +10,6 @@ import com.ems.app.object.BaseResource;
 @Contract
 public interface ResourceManager<T extends BaseResource> {
 	List<T> search(Class<? extends ResourceDAO> resourceDAO) throws Exception;
+
+	T get(Class<? extends ResourceDAO> resourceDAO, String id) throws Exception;
 }
