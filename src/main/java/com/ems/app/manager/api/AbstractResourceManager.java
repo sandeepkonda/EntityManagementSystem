@@ -35,7 +35,7 @@ public abstract class AbstractResourceManager<T extends BaseResource> implements
 	}
 
 	@Override
-	public final T get(Class<? extends ResourceDAO> resourceDAO, String id) throws Exception{
+	public final T get(Class<? extends ResourceDAO> resourceDAO, String id) throws Exception {
 		T returnedResponses = null;
 		validateGet();
 		preGet();
@@ -58,5 +58,58 @@ public abstract class AbstractResourceManager<T extends BaseResource> implements
 	protected void validateGet() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	@Override
+	public final T create(Class<? extends ResourceDAO> resourceDAO, String resource) throws Exception {
+		T returnedResponses = null;
+		validateCreate();
+		preCreate();
+		returnedResponses =  (T) resourceDAO.getMethod("create", String.class).invoke(resourceDAO.newInstance(), resource);
+
+		returnedResponses = postCreate(returnedResponses);
+		return returnedResponses;
+	}
+
+	private T postCreate(T returnedResponses) {
+		// TODO Auto-generated method stub
+		return returnedResponses;
+	}
+
+	private void preCreate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void validateCreate() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	@Override
+	public final T update(Class<? extends ResourceDAO> resourceDAO, String resource, String id) throws Exception {
+		T returnedResponses = null;
+		validateUpdate();
+		preUpdate();
+		returnedResponses =  (T) resourceDAO.getMethod("update", String.class, String.class).
+				invoke(resourceDAO.newInstance(), resource, id);
+
+		returnedResponses = postUpdate(returnedResponses);
+		return returnedResponses;
+	}
+
+	private T postUpdate(T returnedResponses) {
+		// TODO Auto-generated method stub
+		return returnedResponses;
+	}
+
+	private void preUpdate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void validateUpdate() {
+		// TODO Auto-generated method stub
+		
 	}
 }

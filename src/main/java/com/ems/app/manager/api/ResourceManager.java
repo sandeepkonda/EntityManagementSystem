@@ -12,4 +12,8 @@ public interface ResourceManager<T extends BaseResource> {
 	List<T> search(Class<? extends ResourceDAO> resourceDAO) throws Exception;
 
 	T get(Class<? extends ResourceDAO> resourceDAO, String id) throws Exception;
+
+	T create(Class<? extends ResourceDAO> resourceDAO, String resource) throws Exception;
+	
+	T update(Class<? extends ResourceDAO> resourceDAO, String resource, String id) throws Exception;
 }

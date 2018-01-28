@@ -6,11 +6,14 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.GenericEntity;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.glassfish.hk2.api.DynamicConfiguration;
@@ -23,6 +26,7 @@ import org.glassfish.hk2.utilities.ServiceLocatorUtilities;
 import com.ems.app.dao.ResourceDAO;
 import com.ems.app.manager.api.ResourceManager;
 import com.ems.app.object.BaseResource;
+import com.ems.app.util.PATCH;
 
 @Path("/{endpoint}")
 public class GenericRestResource {
@@ -61,6 +65,36 @@ public class GenericRestResource {
 				 new GenericEntity<Object>(response) {};
 		return Response.ok(entity).build();
 
+	}
+	
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({APPLICATION_JSON})
+	public Response createResource(String resource,
+			@PathParam(ENDPOINT) String endpoint) throws Exception{
+		ResourceManager<?> resourceManager = provide(endpoint, ResourceManager.class);
+		
+		Object response = (Object) resourceManager.create(resourceDAO, resource);
+
+		GenericEntity<Object> entity = 
+				 new GenericEntity<Object>(response) {};
+		return Response.ok(entity).build();
+	}
+	
+	@Path("/{id}")
+	@PATCH
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({APPLICATION_JSON})
+	public Response updateResource(String resource,
+			@PathParam(ENDPOINT) String endpoint,
+			@PathParam(ID) String id) throws Exception{
+		ResourceManager<?> resourceManager = provide(endpoint, ResourceManager.class);
+		
+		Object response = (Object) resourceManager.update(resourceDAO, resource, id);
+
+		GenericEntity<Object> entity = 
+				 new GenericEntity<Object>(response) {};
+		return Response.ok(entity).build();
 	}
 
 	private <T extends ResourceManager<R>, R extends BaseResource> T  provide(String endpoint,
@@ -105,5 +139,4 @@ public class GenericRestResource {
 		return locator.getService(resourceMgr);
 	}
 	
-
 }
