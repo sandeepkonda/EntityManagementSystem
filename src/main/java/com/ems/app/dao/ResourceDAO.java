@@ -9,4 +9,5 @@ public abstract class ResourceDAO {
 	public abstract User get(String id);
 	public abstract User create(String resource);
 	public abstract User update(String resource, String id);
+	public abstract void delete(String id);
 }

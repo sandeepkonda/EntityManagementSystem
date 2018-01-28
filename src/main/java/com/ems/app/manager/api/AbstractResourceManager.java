@@ -112,4 +112,27 @@ public abstract class AbstractResourceManager<T extends BaseResource> implements
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public final void delete(Class<? extends ResourceDAO> resourceDAO, String id) throws Exception {
+		validateDelete();
+		preDelete();
+		resourceDAO.getMethod("delete", String.class).
+				invoke(resourceDAO.newInstance(), id);
+		postDelete();
+	}
+
+	private void postDelete() {
+		// TODO Auto-generated method stub
+	}
+
+	private void preDelete() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void validateDelete() {
+		// TODO Auto-generated method stub
+		
+	}
 }

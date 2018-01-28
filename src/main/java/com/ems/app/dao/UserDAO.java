@@ -89,4 +89,17 @@ public class UserDAO extends ResourceDAO {
 
 		return user;
 	}
+
+	@Override
+	public void delete(String id) {
+		Session session = SessionUtil.getSession();        
+		Transaction tx = session.beginTransaction();
+
+		Criteria criteria = session.createCriteria(User.class);
+
+		User user =  (User) criteria.add(Restrictions.eq("id", new Integer(id))).uniqueResult();
+		session.delete(user); 
+		tx.commit();
+		session.close();
+	}
 }

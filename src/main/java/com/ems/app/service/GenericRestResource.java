@@ -7,6 +7,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import java.util.List;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -97,6 +98,21 @@ public class GenericRestResource {
 		return Response.ok(entity).build();
 	}
 
+	@Path("/{id}")
+	@DELETE
+	public Response deleteResource(@PathParam(ENDPOINT) String endpoint,
+			@PathParam(ID) String id) {
+		try {
+			ResourceManager<?> resourceManager = provide(endpoint, ResourceManager.class);
+			resourceManager.delete(resourceDAO, id);
+		}
+		catch (Exception e) {
+			return Response.serverError().entity(e.getMessage()).build();
+		}
+
+		return Response.status(201).build(); 
+	}
+	
 	private <T extends ResourceManager<R>, R extends BaseResource> T  provide(String endpoint,
 			Class<ResourceManager> resourceManagerClass) throws Exception {
 		String managerClass = null;

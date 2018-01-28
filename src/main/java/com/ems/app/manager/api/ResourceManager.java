@@ -16,4 +16,6 @@ public interface ResourceManager<T extends BaseResource> {
 	T create(Class<? extends ResourceDAO> resourceDAO, String resource) throws Exception;
 	
 	T update(Class<? extends ResourceDAO> resourceDAO, String resource, String id) throws Exception;
+	
+	void delete(Class<? extends ResourceDAO> resourceDAO, String id) throws Exception;
 }
