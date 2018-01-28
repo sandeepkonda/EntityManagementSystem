@@ -1,5 +1,6 @@
 package com.ems.app.object;
 
-public class Resource implements BaseResource {
 
+public class Resource implements BaseResource {
+	
 }

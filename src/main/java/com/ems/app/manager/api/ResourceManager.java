@@ -4,9 +4,10 @@ import java.util.List;
 
 import org.jvnet.hk2.annotations.Contract;
 
+import com.ems.app.dao.ResourceDAO;
 import com.ems.app.object.BaseResource;
 
 @Contract
 public interface ResourceManager<T extends BaseResource> {
-	List<T> search() throws Exception;
+	List<T> search(Class<? extends ResourceDAO> resourceDAO) throws Exception;
 }

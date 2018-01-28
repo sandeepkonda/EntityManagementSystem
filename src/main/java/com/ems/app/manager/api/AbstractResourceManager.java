@@ -3,6 +3,7 @@ package com.ems.app.manager.api;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ems.app.dao.ResourceDAO;
 import com.ems.app.object.BaseResource;
 import com.ems.app.object.User;
 
@@ -22,10 +23,15 @@ public abstract class AbstractResourceManager<T extends BaseResource> implements
     }
 	
 	@Override
-    public final List<T> search() throws Exception {
-		List<T> returnedResponses = (List<T>) new ArrayList<User>();
+    public final List<T> search(Class<? extends ResourceDAO> resourceDAO) throws Exception {
+		List<T> returnedResponses = null;
 		validateSearch();
 		preSearch();
+		Object o =  resourceDAO.getMethod("search").invoke(resourceDAO.newInstance());
+		if(o instanceof List<?>) {
+			returnedResponses = (List<T>) o;	
+		}
+		
 		returnedResponses = postSearch(returnedResponses);
 		return returnedResponses;
 	}
